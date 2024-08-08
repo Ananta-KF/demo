@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+  namespace: test-ananta
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: public.ecr.aws/aws-appconfig/aws-appconfig-agent:2.x 
+        ports:
+        - containerPort: 3000
+        env:
+        - name: SERVICE_REGION
+          value: "us-east-1" 
+        imagePullPolicy: IfNotPresent
+
+      - name: appconfig-agent
+        image: public.ecr.aws/aws-appconfig/aws-appconfig-agent:2.x
+        ports:
+        - containerPort: 2772
+          name: appconfig-port
+        env:
+        - name: SERVICE_REGION
+          value: "us-east-1"
+        imagePullPolicy: IfNotPresent

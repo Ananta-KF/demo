@@ -15,6 +15,18 @@ export class DatabaseConfig {
   @IsNumber()
   @IsDefined()
   port: number;
+
+  @IsString()
+  @IsDefined()
+  username: string;
+
+  @IsString()
+  @IsDefined()
+  password: string;
+
+  @IsString()
+  @IsDefined()
+  database: string;
 }
 
 export class AuthConfig {
@@ -67,4 +79,14 @@ export class Config {
   @ValidateNested()
   @Type(() => ServerConfig)
   server: ServerConfig;
+}
+
+export class RemoteConfig {
+  @IsString()
+  @IsDefined()
+  host: string;
+
+  @IsNumber()
+  @IsDefined()
+  port: number;
 }

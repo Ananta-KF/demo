@@ -1,17 +1,29 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { AppController } from './app.controller';
+import { TypedConfigModule, remoteLoader } from 'nest-typed-config';
+import { RemoteConfig } from './config/config.model';
 import { AppService } from './app.service';
-import { TypedConfigModule, directoryLoader } from 'nest-typed-config';
-import { Config } from './config/config.model';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
-    TypedConfigModule.forRoot({
-      schema: Config,
-      load: directoryLoader({
-        directory: './src/config_files',
-      }),
+    TypedConfigModule.forRootAsync({
+      schema: RemoteConfig,
+      load: remoteLoader(
+        'http://localhost:32001/applications/eks-app/environments/Production/configurations/eks-app-config-profile',
+        {
+          type: () => 'json',
+          mapResponse: (response) => {
+            console.log('Response:', response);
+            return {
+              host: response.host,
+              port: parseInt(response.port, 10),
+            };
+          },
+          shouldRetry: (response) => response.status !== 200,
+          retries: 3,
+          retryInterval: 3000,
+        }
+      ),
     }),
   ],
   controllers: [AppController],

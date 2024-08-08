@@ -1,7 +1,7 @@
 import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 
 const secret_name = "my-database-config";
-const region = "ap-south-1";
+const region = "us-east-1";
 
 export const awsSecretsLoader = async (): Promise<any> => {
   const client = new SecretsManagerClient({ region });
