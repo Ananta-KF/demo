@@ -4,7 +4,7 @@ metadata:
   name: my-app-deployment
   namespace: test-ananta
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: my-app
@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: public.ecr.aws/aws-appconfig/aws-appconfig-agent:2.x 
+        image: 058264332554.dkr.ecr.us-east-1.amazonaws.com/demo:appconfig-1.1
         ports:
         - containerPort: 3000
         env:

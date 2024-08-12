@@ -9,7 +9,7 @@ import { AppController } from './app.controller';
     TypedConfigModule.forRootAsync({
       schema: RemoteConfig,
       load: remoteLoader(
-        'http://localhost:32001/applications/eks-app/environments/Production/configurations/eks-app-config-profile',
+        'http://localhost:2772/applications/eks-app/environments/Production/configurations/eks-app-config-profile',
         {
           type: () => 'json',
           mapResponse: (response) => {
